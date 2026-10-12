@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#17252A">
+<title>סיורי איכות סביבה</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<style>:root{--bg:#E8ECEA;--surface:#FFFFFF;--surface2:#F4F6F5;--ink:#17252A;--muted:#5A6A6E;--line:#CBD3D0;--act:#E8661C;--act-ink:#FFFFFF;--ok:#2B7A4B;--ok-bg:#E1F0E6;--bad:#BF3226;--bad-bg:#F8E1DE;--na:#6B7A7E;--na-bg:#E6EAE9;--focus:#1F6FB2;--r:10px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121A1C;--surface:#1B2629;--surface2:#223034;--ink:#E6EDEB;--muted:#9AAAAD;--line:#33454A;--act:#F07A33;--ok:#5CC285;--ok-bg:#183326;--bad:#F07468;--bad-bg:#3A1E1B;--na:#9AAAAD;--na-bg:#263336;--focus:#6FB0EA}}
+:root[data-theme="dark"]{--bg:#121A1C;--surface:#1B2629;--surface2:#223034;--ink:#E6EDEB;--muted:#9AAAAD;--line:#33454A;--act:#F07A33;--ok:#5CC285;--ok-bg:#183326;--bad:#F07468;--bad-bg:#3A1E1B;--na:#9AAAAD;--na-bg:#263336;--focus:#6FB0EA}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Rubik","Arial Hebrew",Arial,sans-serif;font-size:16px;line-height:1.45;-webkit-tap-highlight-color:transparent}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2{margin:0;font-weight:600}
+.wrap{max-width:640px;margin:0 auto;padding:14px 14px 40px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.top h1{font-size:18px;text-align:center;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .ttl{flex:1;min-width:0;text-align:center}.top .ttl small{color:var(--muted);font-size:13px}
+.ghost{padding:9px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.sm{padding:7px 11px;font-size:14px}
+.primary{padding:11px 18px;border-radius:var(--r);background:var(--act);color:var(--act-ink);font-weight:600}
+.danger{padding:11px 18px;border-radius:var(--r);background:var(--bad);color:#fff;font-weight:600}
+.wide{display:block;width:100%;margin-top:14px}
+.danger-link{display:block;margin:22px auto 0;color:var(--bad);text-decoration:underline;padding:8px}
+.row{display:flex;gap:8px;align-items:center}.row.end{justify-content:flex-end;margin-top:12px}
+.row input{flex:1}
+.start{display:flex;align-items:center;gap:16px;width:100%;padding:18px;border-radius:14px;background:var(--surface);border:2px solid var(--act);text-align:right}
+.start .plus{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:50%;background:var(--act);color:#fff;font-size:30px;line-height:1}
+.start b{display:block;font-size:20px}.start small{color:var(--muted)}
+.lbl{font-size:14px;color:var(--muted);font-weight:500;margin:24px 2px 8px}
+.empty{color:var(--muted);text-align:center;padding:24px 10px}.empty.sm{padding:10px;font-size:14px}
+.list{display:grid;gap:8px}
+.tcard{display:flex;justify-content:space-between;gap:10px;width:100%;padding:13px 14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);text-align:right}
+.tc-main{min-width:0}.tc-main b{display:block}.tc-main span{font-size:14px;color:var(--muted)}
+.tc-side{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:none}.tc-side small{color:var(--muted);font-size:13px}
+.backup{justify-content:center;margin-top:26px}
+.warn{background:var(--bad-bg);color:var(--bad);padding:10px;border-radius:var(--r);font-size:14px}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:13px;font-weight:500;white-space:nowrap}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}.pill.bad{background:var(--bad-bg);color:var(--bad)}.pill.na{background:var(--na-bg);color:var(--na)}
+.form label{display:block;margin:14px 0 0;font-size:14px;color:var(--muted);font-weight:500}
+.form input,.form select,.form textarea,.fu textarea,.fu input{display:block;width:100%;margin-top:5px;padding:11px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--ink);font-size:16px}
+.form textarea,.fu textarea{resize:vertical}
+fieldset{margin:18px 0 0;border:1px solid var(--line);border-radius:var(--r);padding:10px 12px 12px}
+legend{font-size:14px;color:var(--muted);font-weight:500;padding:0 6px}
+.pp{display:flex;gap:6px;margin-bottom:6px}.pp input{margin:0;flex:1;min-width:0}
+.x{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--surface);font-size:20px;line-height:1;color:var(--muted)}
+.two,.three{display:grid;grid-template-columns:1fr 1fr;gap:10px}.three{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:420px){.three{grid-template-columns:1fr 1fr}.three label:first-child{grid-column:1/-1}}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:14px}
+.chip.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.chip.on.ok{background:var(--ok);border-color:var(--ok);color:#fff}.chip.on.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+#tplBox{margin-top:18px}
+.tplhead b{display:block;font-size:14px;color:var(--muted);font-weight:500}
+.sug{display:block;margin-top:4px;font-size:14px;padding:8px 10px;border-radius:8px;background:var(--surface2);border-inline-start:4px solid var(--act)}
+.tpls{display:grid;gap:8px;margin-top:8px}
+.tpl{text-align:right;padding:11px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.tpl b{display:block}.tpl em{font-style:normal;font-size:12px;background:var(--act);color:#fff;padding:1px 7px;border-radius:999px;margin-inline-start:6px;vertical-align:2px}
+.tpl small{color:var(--muted);font-size:13px}
+.tpl.on{border:2px solid var(--ink);padding:10px 11px}
+.tpl:disabled:not(.on){opacity:.45}
+.hint{color:var(--muted);font-size:14px}
+.tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 57px);z-index:4;display:flex;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--line)}
+.tabs button{flex:1 0 auto;padding:12px 14px;font-size:15px;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--ink);font-weight:600;border-bottom-color:var(--act)}
+.sec{margin-bottom:22px}
+.sechead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:4px 0 8px}
+.sectitle{text-align:right;font-weight:600;font-size:16px;padding:4px 0}.sectitle span{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.fcard{display:flex;gap:12px;width:100%;margin-bottom:8px;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);text-align:right;align-items:stretch}
+.fcard.unset{background:var(--surface2);border-style:dashed}
+.thumb{position:relative;flex:none;width:84px;height:84px;border-radius:7px;overflow:hidden;background:var(--na-bg);display:grid;place-items:center}
+.thumb img{width:100%;height:100%;object-fit:cover}.thumb span{font-size:12px;color:var(--muted)}
+.thumb i{position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,.65);color:#fff;font-style:normal;font-size:12px;padding:0 6px;border-radius:6px}
+.fcard.unset .thumb{width:48px;height:48px}
+.fbody{min-width:0;flex:1}
+.fhead{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.fbody p{margin:4px 0 2px;font-size:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fbody small{font-size:13px;color:var(--muted)}
+.spacer{height:90px}
+.shutter{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);left:50%;transform:translateX(-50%);z-index:6;width:76px;height:76px;border-radius:50%;background:var(--surface);border:4px solid var(--act);box-shadow:0 4px 18px rgba(0,0,0,.25);display:grid;place-items:center}
+.shutter span{width:56px;height:56px;border-radius:50%;background:var(--act);position:relative}
+.shutter span::after{content:"";position:absolute;inset:16px 13px 15px;border:3px solid #fff;border-radius:5px}
+.shutter span::before{content:"";position:absolute;top:12px;left:22px;width:12px;height:6px;background:#fff;border-radius:2px 2px 0 0}
+.shutter:active{transform:translateX(-50%) scale(.94)}
+.seg{display:flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.seg button{flex:1;padding:8px 6px;font-size:14px;border-inline-start:1px solid var(--line)}
+.seg button:first-child{border-inline-start:0}
+.seg button.on{background:var(--ink);color:var(--surface);font-weight:600}
+.seg button.on.ok{background:var(--ok);color:#fff}.seg button.on.bad{background:var(--bad);color:#fff}.seg button.on.na{background:var(--na);color:#fff}
+.seg.big{margin-top:16px}.seg.big button{padding:13px 6px;font-size:16px}
+.sumlist{display:grid;gap:6px;margin-top:10px}
+.sumrow{display:grid;grid-template-columns:1fr 1.5fr;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 10px}
+@media (max-width:420px){.sumrow{grid-template-columns:1fr}}
+.fu{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px;margin-bottom:10px}
+.fu label{display:block;font-size:13px;color:var(--muted);margin-top:8px}
+.fu .row{align-items:flex-start}
+.exp h2{font-size:20px;margin-top:6px}
+.issues{margin:16px 0;padding:12px 14px;border-radius:var(--r);background:var(--bad-bg)}.issues ul{margin:6px 0 0;padding-inline-start:20px}
+.issues.okk{background:var(--ok-bg);color:var(--ok);font-weight:500}
+#sheet{position:fixed;inset:0;z-index:20;background:var(--bg);overflow-y:auto}
+.photos{display:flex;flex-wrap:wrap;gap:10px}
+.ph{position:relative}
+.phbtn{display:block;width:132px;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+.phbtn img{display:block;width:132px;height:110px;object-fit:cover}
+.phbtn span{display:block;font-size:12px;padding:4px;color:var(--muted)}
+.ph .x{position:absolute;top:-8px;left:-8px;width:30px;height:30px;font-size:17px}
+.addph{display:flex;flex-direction:column;gap:6px;justify-content:center}
+.addph button{width:110px;padding:12px 8px;border:1px dashed var(--muted);border-radius:8px;background:var(--surface);font-size:14px}
+.addph button:first-child{border:2px solid var(--act);color:var(--act);font-weight:600}
+.ai{margin-top:8px;padding:9px 12px;border-radius:var(--r);border:1px solid var(--focus);color:var(--focus);background:var(--surface);font-size:14px;width:100%}
+.ai:disabled{opacity:.6}
+#aiOut{min-height:1em;margin-top:4px}
+#annot{position:fixed;inset:0;z-index:40;background:#000;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#annot[hidden],#dialog[hidden],#busy[hidden],#sheet[hidden]{display:none}
+.anbar{display:flex;gap:6px;align-items:center;justify-content:space-between;padding:8px;background:#1b1b1b;flex-wrap:wrap}
+.anbar .ghost{background:#2a2a2a;color:#fff;border-color:#444}.anbar .seg{background:#2a2a2a;border-color:#444}.anbar .seg button{color:#fff;border-color:#444}.anbar .seg button.on{background:#fff;color:#000}
+.anstage{flex:1;min-height:0;display:grid;place-items:center;padding:6px}
+#anCv{max-width:100%;max-height:100%;touch-action:none;display:block}
+#dialog{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.45);display:grid;place-items:center;padding:16px}
+.dlg{background:var(--surface);border-radius:14px;padding:18px;width:min(420px,100%)}
+.dlg p{margin:0 0 10px;font-size:16px}.dlg input{width:100%;padding:11px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);color:var(--ink)}
+.dlg h2{font-size:18px}
+#busy{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.4);display:grid;place-items:center}
+#busy span{background:var(--surface);padding:14px 20px;border-radius:12px;font-weight:500}
+#toast{position:fixed;bottom:calc(env(safe-area-inset-bottom,0px) + 104px);left:50%;transform:translateX(-50%) translateY(20px);z-index:70;background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+</style>
+<script src="docx.js"></script>
+</head><body>
+<div id="app"></div><div id="sheet" hidden></div><div id="annot" hidden></div><div id="dialog" hidden></div>
+<div id="busy" hidden><span>רגע…</span></div><div id="toast" role="status" aria-live="polite"></div>
+<input type="file" id="camIn" accept="image/*" capture="environment" hidden>
+<input type="file" id="galIn" accept="image/*" multiple hidden>
+<input type="file" id="restoreIn" accept=".json,application/json" hidden>
+<script>
+const LOGO_B64="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";
+/* ===== Report builder (docx) ===== */
+const TEMPLATES = {
+  depot: {
+    id: 'depot', name: 'תבל – סיור שטח (עם תאריך השלמה)', short: 'סיור שטח תבל',
+    desc: 'טבלת ממצאים עם תמונה, מיקום, הנחיות, אחריות ותאריך להשלמה. כולל סיכום נושאים ומעקב פערים.',
+    mode: 'findings', org: 'tavel', landscape: true, due: true, subtitle: false,
+    defaultSection: 'שטח תפעול ומבנים'
+  },
+  contractor: {
+    id: 'contractor', name: 'תבל – סיור מוסך/קבלן (CRRC וכד׳)', short: 'סיור קבלן תבל',
+    desc: 'כותרת עם שם הקבלן, טבלת ממצאים עם אחריות לביצוע (ללא תאריך), סיכום נושאים ומעקב פערים.',
+    mode: 'findings', org: 'tavel', landscape: true, due: false, subtitle: true,
+    defaultSection: ''
+  },
+  dan: {
+    id: 'dan', name: 'דן – ביקורת מוסך', short: 'ביקורת מוסך דן',
+    desc: 'מכתב ביקורת: טבלאות לפי נושאים (אחסון / תחזוקה ותפעול), תקין/לא תקין, פעולה מתקנת, ותמונות בסוף.',
+    mode: 'checklist', org: 'dan', landscape: false, due: false, subtitle: false,
+    categories: [
+      { title: 'הערות בנושאי אחסון', items: ['מצברים', 'שמנים ונוזלי הילוכים', 'קוביות מי קירור', 'שמן משומש', 'מסנני שמן משומשים', 'חומ"ס'] },
+      { title: 'הערות בנושאי תחזוקה ותפעול שוטף', items: ['ניקיון תעלות', 'ניקיון משטחי עבודה', 'טיפול באירועי שפך', 'ניהול קלסר סביבה'] }
+    ]
+  }
+};
+const SUMMARY_TOPICS = ['חומ"ס', 'איכות אוויר', 'קרינה', 'פסולת וניקיון', 'תקינות מאצרות', 'פינוי פסולת', 'צנרת', 'נקזים', 'מים עומדים', 'מזיקים', 'רעש חריג', 'ריח חריג', 'נזילות ומטרדים סמוכי גדר'];
+
+async function buildReport(D, tour, getPhoto, logoBytes) {
+  const tpl = TEMPLATES[tour.templateId];
+  const H = tour.header || {};
+  const FONT = { ascii: 'Arial', hAnsi: 'Arial', cs: 'Arial', eastAsia: 'Arial' };
+  const run = (text, o = {}) => new D.TextRun({
+    text: String(text ?? ''), rightToLeft: true, font: FONT,
+    size: o.size || 20, sizeComplexScript: o.size || 20,
+    bold: !!o.bold, boldComplexScript: !!o.bold,
+    highlight: o.highlight, underline: o.u ? {} : undefined
+  });
+  const para = (children, o = {}) => new D.Paragraph({
+    bidirectional: true,
+    alignment: o.center ? D.AlignmentType.CENTER : undefined,
+    spacing: { before: o.before || 0, after: o.after ?? 40, line: 276 },
+    keepNext: o.keepNext,
+    children: Array.isArray(children) ? children : [children]
+  });
+  const textParas = (text, o = {}) => String(text || '').split('\n').map(l => para(run(l, o), o));
+  const SHADE = { fill: 'F2F2F2', type: D.ShadingType.CLEAR, color: 'auto' };
+  const SHADE2 = { fill: 'D9D9D9', type: D.ShadingType.CLEAR, color: 'auto' };
+  const cell = (content, o = {}) => new D.TableCell({
+    width: o.w ? { size: o.w, type: D.WidthType.DXA } : undefined,
+    columnSpan: o.span,
+    shading: o.shade === 2 ? SHADE2 : o.shade ? SHADE : undefined,
+    margins: { top: 60, bottom: 60, left: 90, right: 90 },
+    verticalAlign: o.vcenter ? D.VerticalAlign.CENTER : D.VerticalAlign.TOP,
+    children: (Array.isArray(content) ? content : (content instanceof D.Paragraph ? [content] : textParas(content, o)))
+  });
+  const table = (widths, rows) => new D.Table({
+    visuallyRightToLeft: true,
+    width: { size: widths.reduce((a, b) => a + b, 0), type: D.WidthType.DXA },
+    columnWidths: widths, layout: D.TableLayoutType.FIXED, rows
+  });
+  const row = (cells, o = {}) => new D.TableRow({ children: cells, tableHeader: !!o.header, cantSplit: !!o.cantSplit });
+
+  async function photoParas(ids, maxW, maxH, center) {
+    const runs = [];
+    const n = ids.length;
+    const eachW = n > 1 ? Math.floor((maxW - 8 * (n - 1)) / Math.min(n, 2)) : maxW;
+    for (let i = 0; i < ids.length; i++) {
+      const p = await getPhoto(ids[i]);
+      if (!p) continue;
+      let w = eachW, h = Math.round(eachW * p.h / p.w);
+      if (h > maxH) { h = maxH; w = Math.round(maxH * p.w / p.h); }
+      runs.push(new D.ImageRun({ type: 'jpg', data: p.bytes, transformation: { width: w, height: h } }));
+      if (i < ids.length - 1) runs.push(new D.TextRun({ text: '  ' }));
+    }
+    if (!runs.length) return [para(run(''))];
+    return [new D.Paragraph({ alignment: D.AlignmentType.CENTER, children: runs })];
+  }
+
+  const fmtDate = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${dd}/${m}/${y}`; };
+  const children = [];
+  let pageW, header;
+
+  if (tpl.org === 'tavel') {
+    pageW = 16838 - 1440;
+    const logo = logoBytes ? [new D.Paragraph({ children: [new D.ImageRun({ type: 'png', data: logoBytes, transformation: { width: 70, height: 64 } })] })] : [];
+    header = new D.Header({ children: logo });
+    const W3 = [Math.round(pageW / 3), Math.round(pageW / 3), pageW - 2 * Math.round(pageW / 3)];
+    const titleKids = [para(run('דוח סיור איכות סביבה', { bold: true, size: 32 }), { center: true })];
+    if (tpl.subtitle && H.subtitle) titleKids.push(para(run(H.subtitle, { bold: true, size: 28 }), { center: true }));
+    children.push(table(W3, [
+      row([cell(titleKids, { span: 3, shade: 1 })]),
+      row([cell('תאריך הסיור', { bold: true, shade: 1, center: true }), cell('מיקום', { bold: true, shade: 1, center: true }), cell('מספר מסמך', { bold: true, shade: 1, center: true })]),
+      row([cell(fmtDate(H.date), { bold: true, center: true }), cell(H.location || H.site || '', { bold: true, center: true }), cell(H.docNo || '', { bold: true, center: true })])
+    ]));
+    children.push(para(run('')));
+    const W2 = [Math.round(pageW / 2), pageW - Math.round(pageW / 2)];
+    const prow = [
+      row([cell('משתתפי הסיור', { span: 2, shade: 1, bold: true, center: true })]),
+      row([cell('שם', { bold: true, center: true }), cell('תפקיד / חברה', { bold: true, center: true })])
+    ];
+    (tour.participants || []).filter(p => p.name || p.role).forEach(p => prow.push(row([cell(p.name, { center: true }), cell(p.role, { center: true })])));
+    prow.push(row([cell('נכתב ע"י: ' + (H.author || ''), { span: 2 })]));
+    children.push(table(W2, prow));
+    children.push(new D.Paragraph({ children: [new D.PageBreak()] }));
+
+    // Findings
+    const W = tpl.due ? [500, 5800, 1600, 4100, 1800, 1598] : [500, 5800, 2000, 5000, 2098];
+    const span = W.length;
+    const heads = ['#', 'תצפית בשטח', 'מיקום', 'הערות והנחיות לפעולה מתקנת', tpl.due ? 'אחריות לביצוע' : 'אחריות לביצוע'];
+    if (tpl.due) heads.push('תאריך להשלמה');
+    const frows = [
+      row([cell(para(run('פירוט ממצאים ותיעוד', { bold: true, size: 24 }), { center: true }), { span, shade: 2 })], { header: true }),
+      row(heads.map((h, i) => cell(h, { bold: true, center: true, w: W[i] })), { header: true })
+    ];
+    let n = 0;
+    for (const sec of tour.sections || []) {
+      const fs = (tour.findings || []).filter(f => f.sectionId === sec.id);
+      if (!fs.length) continue;
+      if (sec.title) frows.push(row([cell(para(run(sec.title, { bold: true, size: 22 }), { center: true }), { span, shade: 1 })], { cantSplit: true }));
+      for (const f of fs) {
+        n++;
+        const notes = String(f.notes || '').split('\n').map((l, i, arr) => {
+          const kids = [run(l)];
+          if (i === arr.length - 1 && f.status === 'ok' && !/תקין/.test(f.notes || '')) kids.push(run(' - '), run('תקין', { bold: true }));
+          return para(kids);
+        });
+        const r = [
+          cell(String(n), { center: true, w: W[0] }),
+          cell(await photoParas(f.photos || [], 360, 230), { w: W[1] }),
+          cell(f.location || '', { w: W[2] }),
+          cell(notes, { w: W[3] }),
+          cell(f.owner || '', { w: W[4] })
+        ];
+        if (tpl.due) r.push(cell(f.due || (f.status === 'ok' ? 'ידיעה' : ''), { w: W[5] }));
+        frows.push(row(r, { cantSplit: true }));
+      }
+    }
+    if (n === 0) frows.push(row([cell('לא נרשמו ממצאים', { span, center: true })]));
+    children.push(table(W, frows));
+  } else {
+    // Dan letter format
+    pageW = 11906 - 1600;
+    header = new D.Header({ children: [] });
+    const W2 = [Math.round(pageW / 2), pageW - Math.round(pageW / 2)];
+    children.push(table(W2, [row([
+      cell(para(run(H.orgHe || '"דן" חברה לתחבורה ציבורית בע"מ', { bold: true, size: 24 }), { center: true })),
+      cell(new D.Paragraph({ alignment: D.AlignmentType.CENTER, children: [new D.TextRun({ text: H.orgEn || 'DAN COMPANY FOR PUBLIC TRANSPORT LTD', bold: true, font: 'Arial', size: 22 })] }))
+    ])]));
+    children.push(para(run('')));
+    children.push(para([run((H.author || '') + '  ', { bold: true }), run(H.authorTitle || '', { bold: true })]));
+    children.push(para(run('')));
+    children.push(para(run(`ביקורת ${H.site || ''} – ${fmtDate(H.date)}`, { bold: true, size: 28, u: true }), { center: true, after: 200 }));
+    children.push(para(run(`בתאריך ${fmtDate(H.date)} נערך סיור איכות סביבה ב${H.site || ''}.`)));
+    if (H.accompaniedBy) children.push(para(run(`מטעם האתר ליווה את הסיור ${H.accompaniedBy}.`)));
+    children.push(para(run('')));
+    children.push(para(run('הערות כלליות:', { bold: true, u: true })));
+    textParas(H.generalNotes || '').forEach(p => children.push(p));
+    children.push(para(run('')));
+    const W = [1500, 1000, 2100, 2100, 1300, pageW - 8000];
+    const heads = ['תת נושא', 'תקין / לא תקין', 'תיאור הממצאים', 'פעולה מתקנת נדרשת', 'אחריות', 'הערות כלליות'];
+    for (const sec of tour.sections || []) {
+      const fs = (tour.findings || []).filter(f => f.sectionId === sec.id && (f.status === 'ok' || f.status === 'bad'));
+      if (!fs.length) continue;
+      const rows = [
+        row([cell(para(run(sec.title, { bold: true, size: 22 }), { center: true }), { span: 6, shade: 2 })], { header: true }),
+        row(heads.map((h, i) => cell(h, { bold: true, center: true, shade: 1, w: W[i] })), { header: true })
+      ];
+      for (const f of fs) rows.push(row([
+        cell(f.subTopic || f.location || '', { bold: true, w: W[0] }),
+        cell(f.status === 'ok' ? 'תקין' : f.status === 'bad' ? 'לא תקין' : '', { center: true, w: W[1] }),
+        cell(f.notes || '', { w: W[2] }), cell(f.action || '', { w: W[3] }),
+        cell(f.owner || '', { w: W[4] }), cell(f.remark || '', { w: W[5] })
+      ], { cantSplit: true }));
+      children.push(table(W, rows));
+      children.push(para(run('')));
+    }
+    const withPhotos = (tour.findings || []).filter(f => (f.photos || []).length && (f.status === 'ok' || f.status === 'bad'));
+    for (const f of withPhotos) {
+      children.push(para(run(f.caption || [f.subTopic, f.notes].filter(Boolean).join(' – '), { bold: true }), { keepNext: true, before: 120 }));
+      (await photoParas(f.photos, 340, 250)).forEach(p => children.push(p));
+    }
+    children.push(para(run('')));
+    children.push(para(run('בברכה,')));
+    children.push(para(run(H.author || '')));
+    children.push(para(run(H.authorTitle || '')));
+    children.push(para(run(H.orgHe || '', { bold: true })));
+  }
+
+  // Summary + follow-up (Tavel formats)
+  if (tpl.org === 'tavel') {
+    children.push(new D.Paragraph({ children: [new D.PageBreak()] }));
+    const WS = [600, pageW - 4600, 4000];
+    const srows = [
+      row([cell(para(run('סיכום ממצאים', { bold: true, size: 24 }), { center: true }), { span: 3, shade: 1 })]),
+      row([cell('#', { bold: true, center: true }), cell('נושא', { bold: true }), cell('סטטוס (תקין/לא תקין/לא נבדק)', { bold: true })])
+    ];
+    SUMMARY_TOPICS.forEach((t, i) => srows.push(row([cell(String(i + 1), { center: true }), cell(t), cell((tour.summary || {})[t] || 'לא נבדק')])));
+    children.push(table(WS, srows));
+    const fu = (tour.followups || []).filter(x => x.text);
+    if (fu.length) {
+      children.push(para(run('')));
+      const WF = [500, pageW - 500 - 1900 - 1900 - 1500 - 1700, 1900, 1900, 1500, 1700];
+      const frows = [
+        row([cell(para(run('מעקב אחר פערים מסיורים קודמים', { bold: true, size: 24 }), { center: true }), { span: 6, shade: 2 })], { header: true }),
+        row(['#', 'הערות והנחיות לפעולה מתקנת', 'תאריך סיור', 'מיקום', 'סטטוס', 'אחריות לביצוע'].map((h, i) => cell(h, { bold: true, center: true, w: WF[i] })), { header: true })
+      ];
+      fu.forEach((x, i) => {
+        const st = x.status || '';
+        frows.push(row([
+          cell(String(i + 1), { center: true }), cell(x.text), cell(fmtDate(x.date) || x.dateText || '', { center: true }),
+          cell(x.location || '', { center: true }),
+          cell(para(run(st, { bold: true, u: true, highlight: /לא בוצע/.test(st) ? 'yellow' : undefined }), { center: true })),
+          cell(x.owner || '', { center: true })
+        ], { cantSplit: true }));
+      });
+      children.push(table(WF, frows));
+    }
+  }
+
+  const footer = new D.Footer({ children: [new D.Paragraph({ alignment: D.AlignmentType.CENTER, children: [new D.TextRun({ children: [D.PageNumber.CURRENT], font: 'Arial', size: 20 })] })] });
+  return new D.Document({
+    styles: { default: { document: { run: { font: 'Arial', size: 20 } } } },
+    sections: [{
+      properties: {
+        page: {
+          size: tpl.landscape ? { width: 11906, height: 16838, orientation: D.PageOrientation.LANDSCAPE } : { width: 11906, height: 16838 },
+          margin: tpl.landscape ? { top: 1300, bottom: 900, left: 720, right: 720, header: 400 } : { top: 1100, bottom: 1000, left: 800, right: 800 }
+        }
+      },
+      headers: { default: header }, footers: { default: footer },
+      children
+    }]
+  });
+}
+
+
+/* ===== App ===== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const uid = () => Math.random().toString(36).slice(2, 9) + Date.now().toString(36).slice(-5);
+const pad = n => String(n).padStart(2, '0');
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
+const dotDate = d => `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}`;
+const showDate = s => { if (!s) return ''; const [y, m, d] = s.split('-'); return `${d}/${m}/${y}`; };
+const norm = s => String(s || '').replace(/["'״׳\s\-–]/g, '').toLowerCase();
+
+/* ---------- storage ---------- */
+let idb = null, storageOK = true;
+const mem = { tours: new Map(), photos: new Map(), kv: new Map() };
+function openDB() {
+  return new Promise(res => {
+    try {
+      const r = indexedDB.open('eco-tour', 1);
+      r.onupgradeneeded = () => { const d = r.result; ['tours', 'photos', 'kv'].forEach(n => { if (!d.objectStoreNames.contains(n)) d.createObjectStore(n); }); };
+      r.onsuccess = () => { idb = r.result; res(); };
+      r.onerror = () => { storageOK = false; res(); };
+      setTimeout(() => { if (!idb) { storageOK = false; res(); } }, 4000);
+    } catch (e) { storageOK = false; res(); }
+  });
+}
+function idbReq(st, mode, fn) {
+  return new Promise((res, rej) => {
+    try {
+      const t = idb.transaction(st, mode); const r = fn(t.objectStore(st));
+      t.oncomplete = () => res(r ? r.result : undefined); t.onerror = () => rej(t.error); t.onabort = () => rej(t.error);
+    } catch (e) { rej(e); }
+  });
+}
+async function dbPut(st, k, v) { mem[st].set(k, v); if (!idb) return; try { await idbReq(st, 'readwrite', s => s.put(v, k)); } catch (e) { storageWarn(); } }
+async function dbGet(st, k) { if (mem[st].has(k)) return mem[st].get(k); if (!idb) return; try { const v = await idbReq(st, 'readonly', s => s.get(k)); if (v !== undefined) mem[st].set(k, v); return v; } catch (e) { return; } }
+async function dbDel(st, k) { mem[st].delete(k); if (!idb) return; try { await idbReq(st, 'readwrite', s => s.delete(k)); } catch (e) { } }
+async function dbAll(st) { if (!idb) return [...mem[st].values()]; try { return await idbReq(st, 'readonly', s => s.getAll()); } catch (e) { return [...mem[st].values()]; } }
+let warned = false;
+function storageWarn() { storageOK = false; if (!warned) { warned = true; toast('השמירה במכשיר נכשלה – הנתונים זמינים רק עד סגירת הדף. מומלץ להפיק דוח או גיבוי.'); } }
+
+/* ---------- capabilities ---------- */
+let downloadsCap = null, sampleCap = null, sampleImages = false, lastFile = null;
+const IN_CLAUDE = !!(window.claude && window.claude.use);
+async function blobB64(b) { const u = new Uint8Array(await b.arrayBuffer()); let s = ''; for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000)); return btoa(s); }
+function apiSampler(key) {
+  const f = {};
+  f.limits = async () => ({ images: { maxCount: 2 } });
+  f.json = async (prompt, opts = {}) => {
+    const content = [];
+    for (const b of [].concat(opts.images || [])) content.push({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: await blobB64(b) } });
+    content.push({ type: 'text', text: prompt });
+    let r;
+    try {
+      r = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' }, body: JSON.stringify({ model: 'claude-sonnet-5-5', max_tokens: 1000, messages: [{ role: 'user', content }] }) });
+    } catch (e) { throw { code: 'offline' }; }
+    if (!r.ok) throw { code: r.status === 401 ? 'bad_key' : r.status === 429 ? 'rate_limited' : 'upstream_error' };
+    const d = await r.json(); const t = (d.content || []).filter(c => c.type === 'text').map(c => c.text).join('');
+    const m = t.match(/\{[\s\S]*\}/); if (!m) throw { code: 'invalid_json' };
+    try { return JSON.parse(m[0]); } catch (e) { throw { code: 'invalid_json' }; }
+  };
+  return f;
+}
+function setupApiSampler() { if (IN_CLAUDE) return; sampleCap = S.settings.apiKey ? apiSampler(S.settings.apiKey) : null; sampleImages = !!sampleCap; }
+if (IN_CLAUDE) {
+  window.claude.use('downloads').then(d => { downloadsCap = d; }).catch(() => { });
+  window.claude.use('sample').then(async s => {
+    sampleCap = s;
+    if (s) { try { const l = await s.limits(); sampleImages = !!l.images; } catch (e) { } }
+    if (S.sheet === 'editor') renderEditor();
+  }).catch(() => { });
+}
+
+/* ---------- state ---------- */
+const S = { tours: [], settings: { author: '', authorTitle: 'יועץ סביבה', people: [], owners: [] }, view: 'home', tab: 'findings', sheet: null };
+let T = null, E = null, editorIsNew = false;
+let saveTimer = null;
+function saveTour() { if (!T || T._unsaved) return; clearTimeout(saveTimer); saveTimer = setTimeout(() => { T.updatedAt = Date.now(); dbPut('tours', T.id, JSON.parse(JSON.stringify(T))); }, 300); }
+function saveSettings() { dbPut('kv', 'settings', S.settings); }
+const setPath = (o, p, v) => { const k = p.split('.'); let x = o; for (let i = 0; i < k.length - 1; i++) x = x[k[i]] ??= {}; x[k[k.length - 1]] = v; };
+const getPath = (o, p) => p.split('.').reduce((x, k) => x?.[k], o);
+
+/* ---------- photos ---------- */
+const urlCache = new Map();
+async function photoURL(id) {
+  if (urlCache.has(id)) return urlCache.get(id);
+  const p = await dbGet('photos', id); if (!p) return '';
+  const u = URL.createObjectURL(p.blob); urlCache.set(id, u); return u;
+}
+async function hydrate(root = document) {
+  for (const im of root.querySelectorAll('img[data-pid]')) { if (!im.getAttribute('src')) { const u = await photoURL(im.dataset.pid); if (u) im.src = u; } }
+}
+async function decode(file) {
+  try { return await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch (e) { const u = URL.createObjectURL(file); const img = new Image(); img.src = u; await img.decode(); return img; }
+}
+async function processFile(file) {
+  const bmp = await decode(file);
+  const W0 = bmp.width, H0 = bmp.height, sc = Math.min(1, 1600 / Math.max(W0, H0));
+  const w = Math.round(W0 * sc), h = Math.round(H0 * sc);
+  const c = document.createElement('canvas'); c.width = w; c.height = h; c.getContext('2d').drawImage(bmp, 0, 0, w, h);
+  const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.82));
+  const id = 'p' + uid(); await dbPut('photos', id, { blob, w, h }); return id;
+}
+let pickCb = null;
+function pickPhotos(useCamera, cb) { pickCb = cb; const el = useCamera ? $('#camIn') : $('#galIn'); el.value = ''; el.click(); }
+async function onPicked(e) {
+  const files = [...e.target.files]; if (!files.length || !pickCb) return;
+  const cb = pickCb; pickCb = null; busy(true, 'מעבד תמונה…');
+  const ids = []; for (const f of files) { try { ids.push(await processFile(f)); } catch (err) { toast('לא ניתן לקרוא את הקובץ כתמונה'); } }
+  busy(false); if (ids.length) cb(ids);
+}
+
+/* ---------- templates ---------- */
+function suggestTemplate() {
+  const H = T.header;
+  if (H.site) {
+    const prev = S.tours.filter(t => t.id !== T.id && norm(t.header.site) === norm(H.site)).sort((a, b) => (b.header.date || '').localeCompare(a.header.date || ''))[0];
+    if (prev && TEMPLATES[prev.templateId]) return { id: prev.templateId, why: `נמצא סיור קודם באתר זה (${showDate(prev.header.date)}) – אותו פורמט` };
+  }
+  if (/דן|dan/i.test(H.client || '')) return { id: 'dan', why: 'לקוח דן – פורמט מכתב ביקורת מוסך' };
+  if (/crrc|קבלן|מוסך/i.test((H.site || '') + ' ' + (H.client || '') + ' ' + (H.location || ''))) return { id: 'contractor', why: 'אתר מוסך / קבלן – פורמט סיור קבלן' };
+  return { id: 'depot', why: 'סיור שטח כללי – טבלת ממצאים עם תאריכי השלמה' };
+}
+function newDocNo() {
+  const [y, m, d] = (T.header.date || today()).split('-');
+  const n = S.tours.filter(t => t.id !== T.id && t.header.date === T.header.date).length + 1;
+  return `EQIN${d}${m}${y}${n}`;
+}
+
+/* ---------- UI helpers ---------- */
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('on'), 3200); }
+function busy(on, msg) { const b = $('#busy'); b.hidden = !on; if (msg) b.querySelector('span').textContent = msg; }
+function ask(text, { input = null, ok = 'אישור', danger = false } = {}) {
+  return new Promise(res => {
+    const L = $('#dialog');
+    L.innerHTML = `<div class="dlg"><p>${esc(text)}</p>${input !== null ? `<input id="dlgIn" value="${esc(input)}">` : ''}
+      <div class="row end"><button class="ghost" id="dlgNo">ביטול</button><button class="${danger ? 'danger' : 'primary'}" id="dlgOk">${esc(ok)}</button></div></div>`;
+    L.hidden = false;
+    const close = v => { L.hidden = true; L.innerHTML = ''; res(v); };
+    $('#dlgNo').onclick = () => close(null);
+    $('#dlgOk').onclick = () => close(input !== null ? $('#dlgIn').value : true);
+    if (input !== null) setTimeout(() => $('#dlgIn').focus(), 50);
+  });
+}
+const opt = (v, cur, label) => `<option value="${esc(v)}" ${v === cur ? 'selected' : ''}>${esc(label ?? v)}</option>`;
+const datalist = (id, arr) => `<datalist id="${id}">${[...new Set(arr.filter(Boolean))].map(v => `<option value="${esc(v)}">`).join('')}</datalist>`;
+const statusPill = s => s === 'ok' ? '<span class="pill ok">תקין</span>' : s === 'bad' ? '<span class="pill bad">לא תקין</span>' : '<span class="pill na">לא נבדק</span>';
+
+/* ---------- render: home ---------- */
+function render() {
+  if (S.view === 'home') renderHome();
+  else if (S.view === 'setup') renderSetup();
+  else renderTour();
+}
+function renderHome() {
+  const tours = [...S.tours].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+  $('#app').innerHTML = `
+  <header class="top"><h1>סיורי איכות סביבה</h1><button class="ghost sm" data-act="settings">הגדרות</button></header>
+  <main class="wrap">
+    <button class="start" data-act="new"><span class="plus">+</span><span><b>סיור חדש</b><small>פרטי הסיור, צילום ממצאים והפקת דוח</small></span></button>
+    ${tours.length ? `<h2 class="lbl">סיורים במכשיר</h2>` : `<p class="empty">עוד אין סיורים. כל סיור שתתחיל יישמר כאן במכשיר, כולל התמונות.</p>`}
+    <div class="list">${tours.map(t => {
+      const bad = t.findings.filter(f => f.status === 'bad').length;
+      return `<button class="tcard" data-open="${t.id}">
+        <div class="tc-main"><b>${esc(t.header.site || 'ללא שם אתר')}</b><span>${showDate(t.header.date)} · ${esc(TEMPLATES[t.templateId]?.short || '')}</span></div>
+        <div class="tc-side">${t.status === 'done' ? '<span class="pill ok">הופק</span>' : '<span class="pill na">טיוטה</span>'}<small>${t.findings.filter(f => f.status).length} ממצאים${bad ? ` · ${bad} לא תקין` : ''}</small></div>
+      </button>`;
+    }).join('')}</div>
+    <div class="row backup"><button class="ghost sm" data-act="backup">גיבוי לקובץ</button><button class="ghost sm" data-act="restore">שחזור מגיבוי</button></div>
+    ${storageOK ? '' : '<p class="warn">שמירה במכשיר אינה זמינה בתצוגה הזו. הנתונים יישמרו רק עד סגירת הדף.</p>'}
+  </main>`;
+}
+
+/* ---------- render: setup ---------- */
+function startNew() {
+  T = {
+    id: 't' + uid(), _unsaved: true, templateId: 'depot', _manualTpl: false, status: 'draft', createdAt: Date.now(),
+    header: { date: today(), client: 'תבל', site: '', location: '', subtitle: '', docNo: '', author: S.settings.author, authorTitle: S.settings.authorTitle, accompaniedBy: '', generalNotes: '', orgHe: '"דן" חברה לתחבורה ציבורית בע"מ', orgEn: 'DAN COMPANY FOR PUBLIC TRANSPORT LTD' },
+    participants: [{ name: S.settings.author || '', role: S.settings.authorTitle || 'יועץ סביבה' }],
+    sections: [], findings: [], summary: {}, followups: []
+  };
+  S.view = 'setup'; render();
+}
+function renderSetup() {
+  const H = T.header, isNew = !!T._unsaved;
+  const sites = S.tours.map(t => t.header.site);
+  $('#app').innerHTML = `
+  <header class="top"><button class="ghost sm" data-act="${isNew ? 'home' : 'backTour'}">${isNew ? 'ביטול' : 'חזרה'}</button><h1>${isNew ? 'סיור חדש' : 'פרטי הסיור'}</h1><span></span></header>
+  <main class="wrap form">
+    <label>לקוח / ארגון
+      <div class="chips">${['תבל', 'דן', 'אחר'].map(c => `<button class="chip ${H.client === c ? 'on' : ''}" data-client="${c}">${c}</button>`).join('')}</div>
+    </label>
+    <label>שם האתר<input data-t="header.site" value="${esc(H.site)}" list="dlSites" placeholder="למשל: דפו רק״ל קו אדום">${datalist('dlSites', sites)}</label>
+    <label>מיקום כפי שיופיע בדוח<input data-t="header.location" value="${esc(H.location)}" placeholder="למשל: שטח אחזקה ומבנים - דפו רק״ל קו אדום"></label>
+    <label>תאריך הסיור<input type="date" data-t="header.date" value="${esc(H.date)}"></label>
+    <div id="tplBox"></div>
+    <div id="tplFields"></div>
+    <fieldset><legend>משתתפי הסיור</legend>
+      <div id="pp">${T.participants.map((p, i) => `<div class="pp"><input data-pp="${i}.name" value="${esc(p.name)}" placeholder="שם" list="dlPeople"><input data-pp="${i}.role" value="${esc(p.role)}" placeholder="תפקיד / חברה" list="dlRoles"><button class="x" data-delpp="${i}" aria-label="הסר משתתף">×</button></div>`).join('')}</div>
+      ${datalist('dlPeople', S.settings.people.map(p => p.name))}${datalist('dlRoles', S.settings.people.map(p => p.role))}
+      <button class="ghost sm" data-act="addpp">+ משתתף</button>
+    </fieldset>
+    <div class="two"><label>נכתב ע"י<input data-t="header.author" value="${esc(H.author)}"></label><label>תפקיד הכותב<input data-t="header.authorTitle" value="${esc(H.authorTitle)}"></label></div>
+    <button class="primary wide" data-act="${isNew ? 'begin' : 'backTour'}">${isNew ? 'התחל סיור' : 'שמור וחזור לסיור'}</button>
+    ${isNew ? '' : '<button class="danger-link" data-act="deltour">מחק סיור זה</button>'}
+  </main>`;
+  renderTplBox();
+}
+function renderTplBox() {
+  const sug = suggestTemplate();
+  if (!T._manualTpl && T._unsaved) T.templateId = sug.id;
+  const box = $('#tplBox'); if (!box) return;
+  box.innerHTML = `<div class="tplhead"><b>פורמט הדוח</b><span class="sug">מוצע: ${esc(TEMPLATES[sug.id].short)} – ${esc(sug.why)}</span></div>
+    <div class="tpls">${Object.values(TEMPLATES).map(t => `<button class="tpl ${T.templateId === t.id ? 'on' : ''}" data-tpl="${t.id}" ${T._unsaved ? '' : 'disabled'}>
+      <b>${esc(t.name)}${t.id === sug.id ? ' <em>מוצע</em>' : ''}</b><small>${esc(t.desc)}</small></button>`).join('')}</div>
+    ${T._unsaved ? '' : '<small class="hint">לא ניתן להחליף פורמט אחרי תחילת הסיור.</small>'}`;
+  const tpl = TEMPLATES[T.templateId], H = T.header;
+  let f = '';
+  if (tpl.subtitle) f += `<label>כותרת משנה בדוח<input data-t="header.subtitle" value="${esc(H.subtitle)}" placeholder="למשל: מוסך אחזקה - CRRC"></label>`;
+  if (tpl.org === 'tavel') f += `<label>מספר מסמך<div class="row"><input data-t="header.docNo" value="${esc(H.docNo)}" placeholder="יופק אוטומטית"><button class="ghost sm" data-act="docno">הפק</button></div></label>`;
+  if (tpl.org === 'dan') f += `<label>מלווה מטעם האתר<input data-t="header.accompaniedBy" value="${esc(H.accompaniedBy)}" placeholder="למשל: סגן מנהל המוסך מר דוד לוי"></label>
+    <label>הערות כלליות<textarea data-t="header.generalNotes" rows="2">${esc(H.generalNotes)}</textarea></label>
+    <div class="two"><label>שם הארגון (עברית)<input data-t="header.orgHe" value="${esc(H.orgHe)}"></label><label>שם הארגון (אנגלית)<input data-t="header.orgEn" value="${esc(H.orgEn)}" dir="ltr"></label></div>`;
+  $('#tplFields').innerHTML = f;
+}
+function beginTour() {
+  const tpl = TEMPLATES[T.templateId], H = T.header;
+  if (!H.site.trim()) { toast('נא למלא שם אתר'); return; }
+  if (!H.location) H.location = H.site;
+  if (tpl.org === 'tavel' && !H.docNo) H.docNo = newDocNo();
+  if (tpl.mode === 'checklist') {
+    tpl.categories.forEach(c => { const s = { id: 's' + uid(), title: c.title }; T.sections.push(s); c.items.forEach(it => T.findings.push(blankFinding(s.id, { subTopic: it, status: '' }))); });
+  } else T.sections.push({ id: 's' + uid(), title: tpl.defaultSection ? `${tpl.defaultSection} – ${H.site}` : '' });
+  // follow-ups from previous tour at same site
+  let imported = 0;
+  if (tpl.org === 'tavel') {
+    const prev = S.tours.filter(t => norm(t.header.site) === norm(H.site)).sort((a, b) => (b.header.date || '').localeCompare(a.header.date || ''))[0];
+    if (prev) {
+      prev.followups.filter(x => x.text && !/^בוצע$/.test(x.status || '')).forEach(x => { T.followups.push({ ...x, id: 'u' + uid(), status: '' }); imported++; });
+      prev.findings.filter(f => f.status === 'bad').forEach(f => { T.followups.push({ id: 'u' + uid(), text: [f.notes, f.action].filter(Boolean).join(' – '), date: prev.header.date, location: f.location || f.subTopic || '', owner: f.owner || '', status: '' }); imported++; });
+    }
+  }
+  // remember people
+  T.participants.forEach(p => { if (p.name && !S.settings.people.some(q => q.name === p.name)) S.settings.people.push({ name: p.name, role: p.role }); });
+  if (H.author) { S.settings.author = H.author; S.settings.authorTitle = H.authorTitle; }
+  saveSettings();
+  delete T._unsaved; S.tours.push(T); saveTour();
+  S.view = 'tour'; S.tab = 'findings'; render();
+  if (imported) toast(`יובאו ${imported} פערים מהסיור הקודם באתר`);
+}
+function blankFinding(sectionId, o = {}) { return { id: 'f' + uid(), sectionId, photos: [], status: 'bad', location: '', subTopic: '', notes: '', action: '', owner: '', due: '', remark: '', caption: '', ...o }; }
+
+/* ---------- render: tour ---------- */
+function renderTour() {
+  const tpl = TEMPLATES[T.templateId];
+  const nF = T.findings.filter(f => tpl.mode === 'findings' || f.status).length;
+  const tabs = [['findings', `ממצאים (${nF})`]];
+  if (tpl.org === 'tavel') tabs.push(['summary', 'סיכום'], ['followups', `פערים קודמים (${T.followups.length})`]);
+  tabs.push(['export', 'הפקה']);
+  if (!tabs.some(t => t[0] === S.tab)) S.tab = 'findings';
+  $('#app').innerHTML = `
+  <header class="top tour"><button class="ghost sm" data-act="home">סיורים</button>
+    <div class="ttl"><h1>${esc(T.header.site)}</h1><small>${showDate(T.header.date)} · ${esc(tpl.short)}</small></div>
+    <button class="ghost sm" data-act="details">פרטים</button></header>
+  <nav class="tabs">${tabs.map(([k, l]) => `<button class="${S.tab === k ? 'on' : ''}" data-tab="${k}">${l}</button>`).join('')}</nav>
+  <main class="wrap" id="tabBody">${S.tab === 'findings' ? findingsTab(tpl) : S.tab === 'summary' ? summaryTab() : S.tab === 'followups' ? followupsTab() : exportTab(tpl)}</main>
+  ${S.tab === 'findings' ? `<button class="shutter" data-act="snap" aria-label="צלם ממצא חדש"><span></span></button>` : ''}`;
+  hydrate($('#app'));
+}
+function findingsTab(tpl) {
+  let n = 0;
+  const html = T.sections.map(sec => {
+    const fs = T.findings.filter(f => f.sectionId === sec.id);
+    const cards = fs.map(f => {
+      if (tpl.mode === 'findings' || f.status) n++;
+      const num = (tpl.mode === 'findings' || f.status) ? n : '';
+      return `<button class="fcard ${f.status ? '' : 'unset'}" data-edit="${f.id}">
+        <div class="thumb">${f.photos[0] ? `<img data-pid="${f.photos[0]}" alt="">` : '<span>אין תמונה</span>'}${f.photos.length > 1 ? `<i>+${f.photos.length - 1}</i>` : ''}</div>
+        <div class="fbody"><div class="fhead"><b>${num ? num + '. ' : ''}${esc(tpl.mode === 'checklist' ? f.subTopic : (f.location || 'ללא מיקום'))}</b>${statusPill(f.status)}</div>
+        <p>${esc(f.notes || (tpl.mode === 'checklist' && !f.status ? 'הקש לבדיקה' : 'ללא הערות'))}</p>
+        ${f.owner || f.due ? `<small>${esc([f.owner, f.due].filter(Boolean).join(' · '))}</small>` : ''}</div></button>`;
+    }).join('');
+    return `<section class="sec"><div class="sechead"><button class="sectitle" data-rename="${sec.id}">${esc(sec.title || 'ללא כותרת אזור')}<span>שנה שם</span></button>
+      <button class="ghost sm" data-addf="${sec.id}">+ ${tpl.mode === 'checklist' ? 'תת נושא' : 'ממצא'}</button></div>
+      ${cards || '<p class="empty sm">אין עדיין ממצאים באזור זה. צלם עם הכפתור הכתום.</p>'}</section>`;
+  }).join('');
+  return html + (tpl.mode === 'findings' ? `<button class="ghost wide" data-act="addsec">+ אזור חדש בסיור</button>` : '') + '<div class="spacer"></div>';
+}
+function summaryTab() {
+  const bad = T.findings.filter(f => f.status === 'bad').length;
+  return `<p class="hint">בכל נושא בחר את הסטטוס שייכנס לטבלת "סיכום ממצאים". ${bad ? `בסיור נרשמו ${bad} ממצאים לא תקינים.` : ''}</p>
+  <div class="row end"><button class="ghost sm" data-act="allok">סמן את כל הלא מסומנים כתקין</button></div>
+  <div class="sumlist">${SUMMARY_TOPICS.map(t => { const v = T.summary[t] || ''; return `<div class="sumrow"><span>${esc(t)}</span><div class="seg">${['תקין', 'לא תקין', 'לא נבדק'].map(s => `<button class="${v === s ? 'on ' + (s === 'תקין' ? 'ok' : s === 'לא תקין' ? 'bad' : 'na') : ''}" data-sum="${esc(t)}" data-v="${s}">${s}</button>`).join('')}</div></div>`; }).join('')}</div>`;
+}
+const FU_ST = ['בוצע', 'בוצע – יש הערות לשיפור', 'בטיפול', 'לא בוצע'];
+function followupsTab() {
+  return `<p class="hint">פערים מסיורים קודמים באותו אתר מיובאים אוטומטית. עדכן לכל פער את הסטטוס שנמצא היום.</p>
+  ${T.followups.map((x, i) => `<div class="fu">
+    <div class="row"><textarea data-fu="${i}.text" rows="2">${esc(x.text)}</textarea><button class="x" data-delfu="${i}" aria-label="הסר פער">×</button></div>
+    <div class="three"><label>תאריך סיור<input type="date" data-fu="${i}.date" value="${esc(x.date)}"></label><label>מיקום<input data-fu="${i}.location" value="${esc(x.location)}"></label><label>אחריות<input data-fu="${i}.owner" value="${esc(x.owner)}"></label></div>
+    <div class="chips">${FU_ST.map(s => `<button class="chip ${x.status === s ? 'on ' + (s === 'בוצע' ? 'ok' : s === 'לא בוצע' ? 'bad' : '') : ''}" data-fust="${i}" data-v="${s}">${s}</button>`).join('')}</div>
+  </div>`).join('') || '<p class="empty">אין פערים פתוחים מסיורים קודמים.</p>'}
+  <button class="ghost wide" data-act="addfu">+ פער ידני</button>`;
+}
+function exportTab(tpl) {
+  const fs = T.findings.filter(f => tpl.mode === 'findings' || f.status);
+  const issues = [];
+  const badNoOwner = fs.filter(f => f.status === 'bad' && !f.owner).length; if (badNoOwner) issues.push(`${badNoOwner} ממצאים לא תקינים ללא אחראי לביצוע`);
+  if (tpl.due) { const nd = fs.filter(f => f.status === 'bad' && !f.due).length; if (nd) issues.push(`${nd} ממצאים לא תקינים ללא תאריך השלמה`); }
+  const np = fs.filter(f => !f.photos.length).length; if (np && tpl.org === 'tavel') issues.push(`${np} ממצאים ללא תמונה`);
+  if (tpl.org === 'tavel') { const ns = SUMMARY_TOPICS.filter(t => !T.summary[t]).length; if (ns) issues.push(`${ns} נושאים בסיכום לא סומנו (יופיעו כ"לא נבדק")`); const nf = T.followups.filter(x => !x.status).length; if (nf) issues.push(`${nf} פערים קודמים ללא סטטוס`); }
+  if (tpl.mode === 'checklist') { const un = T.findings.filter(f => !f.status).length; if (un) issues.push(`${un} תתי נושא לא נבדקו (לא ייכללו בדוח)`); }
+  return `<div class="exp">
+    <h2>${esc(tpl.name)}</h2>
+    <p>${fs.length} ממצאים · ${fs.filter(f => f.status === 'bad').length} לא תקינים · ${fs.reduce((a, f) => a + f.photos.length, 0)} תמונות</p>
+    ${issues.length ? `<div class="issues"><b>לפני הפקה כדאי לבדוק:</b><ul>${issues.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div>` : '<div class="issues okk">הדוח מלא ומוכן להפקה.</div>'}
+    <button class="primary wide" data-act="export">הפק דוח Word</button>
+    <p class="hint">הקובץ נפתח ב-Word ואפשר לערוך אותו לפני שליחה.</p>
+  </div>`;
+}
+
+/* ---------- editor ---------- */
+function openEditor(f, isNew) { E = JSON.parse(JSON.stringify(f)); editorIsNew = isNew; S.sheet = 'editor'; renderEditor(); }
+function renderEditor() {
+  const tpl = TEMPLATES[T.templateId], dan = tpl.org === 'dan';
+  const locs = T.findings.map(f => f.location).concat(S.tours.flatMap(t => t.findings.map(f => f.location)));
+  const owners = S.settings.owners.concat(T.findings.map(f => f.owner));
+  const items = dan ? (tpl.categories.find(c => c.title === T.sections.find(s => s.id === E.sectionId)?.title)?.items || []) : [];
+  const dueChips = [['ידיעה', 'ידיעה'], ['מיידי', 'מיידי'], ['מיידי ושוטף', 'מיידי ושוטף'], ['+7', 'שבוע'], ['+14', 'שבועיים'], ['+30', 'חודש']];
+  const sh = $('#sheet');
+  sh.innerHTML = `<div class="sheet">
+    <header class="top"><button class="ghost sm" data-act="closeEd">ביטול</button><h1>${editorIsNew ? 'ממצא חדש' : 'עריכת ממצא'}</h1><button class="primary sm" data-act="saveEd">שמור</button></header>
+    <main class="wrap form">
+      <div class="photos">${E.photos.map((p, i) => `<div class="ph"><button class="phbtn" data-annot="${i}" aria-label="ערוך תמונה"><img data-pid="${p}" alt=""><span>סמן / סובב</span></button><button class="x" data-delph="${i}" aria-label="הסר תמונה">×</button></div>`).join('')}
+        <div class="addph"><button data-act="edCam">צלם</button><button data-act="edGal">מהגלריה</button></div></div>
+      <div class="seg big">${(dan ? [['ok', 'תקין'], ['bad', 'לא תקין'], ['', 'לא נבדק']] : [['ok', 'תקין'], ['bad', 'לא תקין']]).map(([v, l]) => `<button class="${E.status === v ? 'on ' + (v || 'na') : ''}" data-st="${v}">${l}</button>`).join('')}</div>
+      ${T.sections.length > 1 ? `<label>${dan ? 'נושא' : 'אזור בסיור'}<select data-e="sectionId">${T.sections.map(s => opt(s.id, E.sectionId, s.title || 'ללא כותרת')).join('')}</select></label>` : ''}
+      ${dan ? `<label>תת נושא<input data-e="subTopic" value="${esc(E.subTopic)}" list="dlItems">${datalist('dlItems', items)}</label>` :
+      `<label>מיקום<input data-e="location" value="${esc(E.location)}" list="dlLocs" placeholder="למשל: חדר משאבות של מיכל מים תת״ק">${datalist('dlLocs', locs)}</label>`}
+      <label>${dan ? 'תיאור הממצאים' : 'הערות והנחיות לפעולה מתקנת'}<textarea data-e="notes" rows="4" placeholder="${dan ? 'מה נמצא בשטח' : 'מה נמצא ומה נדרש לעשות'}">${esc(E.notes)}</textarea></label>
+      ${sampleCap ? `<button class="ai" data-act="ai">${E.photos.length && sampleImages ? 'נסח את הממצא לפי התמונה וההערה' : 'נסח את ההערה בסגנון הדוח'}</button><div id="aiOut" class="hint"></div>` : ''}
+      ${dan ? `<label>פעולה מתקנת נדרשת<textarea data-e="action" rows="2">${esc(E.action)}</textarea></label>` : ''}
+      <label>אחריות לביצוע<input data-e="owner" value="${esc(E.owner)}" list="dlOwners" placeholder="שם האחראי">${datalist('dlOwners', owners)}</label>
+      ${tpl.due ? `<label>תאריך להשלמה<input data-e="due" value="${esc(E.due)}" placeholder="למשל 21.05.2026"></label>
+        <div class="chips">${dueChips.map(([v, l]) => `<button class="chip" data-due="${v}">${l}</button>`).join('')}</div>` : ''}
+      ${dan ? `<label>הערות כלליות<input data-e="remark" value="${esc(E.remark)}"></label>
+        ${E.photos.length ? `<label>כיתוב לתמונה בדוח<input data-e="caption" value="${esc(E.caption)}" placeholder="למשל: חבית על גבי אספלט"></label>` : ''}` : ''}
+      ${editorIsNew ? '' : '<button class="danger-link" data-act="delEd">מחק ממצא</button>'}
+    </main></div>`;
+  sh.hidden = false; hydrate(sh);
+}
+function closeEditor() { S.sheet = null; E = null; $('#sheet').hidden = true; $('#sheet').innerHTML = ''; }
+function saveEditor() {
+  const tpl = TEMPLATES[T.templateId];
+  if (tpl.org === 'dan') {
+    // merge into an unchecked item with the same sub-topic
+    const twin = T.findings.find(f => f.id !== E.id && f.sectionId === E.sectionId && !f.status && !f.photos.length && norm(f.subTopic) === norm(E.subTopic));
+    if (twin && editorIsNew) { E.id = twin.id; }
+  }
+  const i = T.findings.findIndex(f => f.id === E.id);
+  if (i >= 0) T.findings[i] = E; else T.findings.push(E);
+  if (E.owner && !S.settings.owners.includes(E.owner)) { S.settings.owners.push(E.owner); saveSettings(); }
+  T._lastSection = E.sectionId; T._lastLocation = E.location;
+  saveTour(); closeEditor(); render();
+}
+async function aiDraft() {
+  const tpl = TEMPLATES[T.templateId], dan = tpl.org === 'dan', out = $('#aiOut'), btn = document.querySelector('[data-act="ai"]');
+  const imgs = [];
+  if (sampleImages) for (const id of E.photos.slice(0, 2)) { const p = await dbGet('photos', id); if (p) imgs.push(p.blob); }
+  const prompt = `אתה עוזר ליועץ איכות סביבה בישראל שמבצע סיור ביקורת סביבתי (חומרים מסוכנים, מאצרות, שילוט, פסולת, שפכים, דלקים).
+המשימה: לנסח ממצא אחד לדוח הסיור, בעברית מקצועית ותמציתית, בסגנון הדוגמאות.
+${imgs.length ? 'מצורפות תמונות מהשטח של הממצא.' : 'אין תמונה – עבוד רק לפי ההערה.'}
+פורמט הדוח: ${tpl.name}
+${dan ? `נושא: ${T.sections.find(s => s.id === E.sectionId)?.title || ''}; תת נושא: ${E.subTopic}` : `מיקום: ${E.location || 'לא צוין'}`}
+סטטוס שסימן המבקר: ${E.status === 'ok' ? 'תקין' : E.status === 'bad' ? 'לא תקין' : 'לא סומן'}
+הערת המבקר (ייתכן שקצרה או מוכתבת): "${E.notes || ''}"
+
+דוגמאות לסגנון ממצאים:
+- מחסן חומ"ס משולט בצורה מלאה - תקין
+- ג'ריקנים של שמן מונחים בעמדה לא ייעודית ללא שילוט וללא מאצרה – להעביר לאחסון על גבי מאצרה
+- מאצרת מיכל סולר לגנרטור מלאה בסולר. יש לפנות את הסולר מהמאצרה ואת הנסורת הספוגה שנמצאת סביב המאצרה.
+- חבית מתכת ריקה לא מסומנת עומדת מחוץ לחדר. במידה והחבית אינה מיועדת לשימוש, יש לפנות בהקדם; אם מיועדת לשימוש, יש לשלט את החבית בהתאם לחומר הנמצא בה ולהעביר למאצרה.
+
+כללים: תאר רק מה שנראה בתמונה או נאמר בהערה, בלי להמציא פרטים (שמות חומרים, כמויות) שלא ניתן לראות. אם משהו לא ברור, נסח בזהירות. ${dan ? 'בשדה notes כתוב את תיאור הממצא בלבד, ובשדה action את הפעולה המתקנת.' : 'בשדה notes כתוב את הממצא יחד עם ההנחיה לפעולה מתקנת (אם לא תקין), ובשדה action החזר מחרוזת ריקה. אם תקין – סיים ב"- תקין".'}
+החזר JSON בלבד בצורה: {"status":"ok או bad","notes":"...","action":"..."}`;
+  btn.disabled = true; out.textContent = 'Claude מנסח…';
+  try {
+    const r = await sampleCap.json(prompt, imgs.length ? { images: imgs } : {});
+    if (r && typeof r.notes === 'string') {
+      collectEditor(); E.notes = r.notes.trim();
+      if (dan && typeof r.action === 'string' && r.action.trim()) E.action = r.action.trim();
+      if (r.status === 'ok' || r.status === 'bad') { E.status = r.status; if (r.status === 'ok' && !E.due && tpl.due) E.due = 'ידיעה'; }
+      renderEditor(); const o = $('#aiOut'); if (o) o.textContent = 'הניסוח הוכנס לשדות. בדוק ותקן לפני שמירה.';
+    } else { out.textContent = 'לא התקבל ניסוח. נסה שוב.'; btn.disabled = false; }
+  } catch (e) {
+    btn.disabled = false;
+    const m = { not_granted: 'השימוש ב-Claude לא אושר בדף הזה.', rate_limited: 'יותר מדי בקשות כרגע. נסה שוב בעוד דקה.', image_rejected: 'התמונה לא התקבלה. נסה תמונה אחרת.', invalid_json: 'התשובה לא הייתה בפורמט הנכון. נסה שוב.', refused: 'Claude לא ניסח את הממצא הזה.', bad_key: 'מפתח ה-API שגוי. עדכן אותו בהגדרות.', offline: 'אין חיבור לאינטרנט. הניסוח דורש חיבור.' };
+    out.textContent = m[e?.code] || 'הניסוח נכשל. נסה שוב.';
+    if (['not_granted', 'sampling_disabled', 'not_declared'].includes(e?.code)) { sampleCap = null; }
+  }
+}
+function collectEditor() { document.querySelectorAll('#sheet [data-e]').forEach(el => { E[el.dataset.e] = el.value; }); }
+
+/* ---------- annotator ---------- */
+async function annotate(idx) {
+  const pid = E.photos[idx]; const rec = await dbGet('photos', pid); if (!rec) return;
+  const bmp = await decode(rec.blob);
+  let base = document.createElement('canvas'); base.width = rec.w; base.height = rec.h; base.getContext('2d').drawImage(bmp, 0, 0, rec.w, rec.h);
+  let strokes = [], tool = 'ell', cur = null;
+  const L = $('#annot'); L.hidden = false;
+  L.innerHTML = `<div class="anbar"><button class="ghost sm" id="anCancel">ביטול</button>
+    <div class="seg"><button id="tEll" class="on">עיגול</button><button id="tPen">קו חופשי</button></div>
+    <button class="ghost sm" id="anRot">סובב</button><button class="ghost sm" id="anUndo">בטל</button><button class="primary sm" id="anSave">שמור</button></div>
+    <div class="anstage"><canvas id="anCv"></canvas></div>`;
+  const cv = $('#anCv'), ctx = cv.getContext('2d');
+  const lw = () => Math.max(4, Math.round(Math.max(base.width, base.height) * 0.007));
+  const drawStroke = (c, s) => { c.strokeStyle = '#E3241B'; c.lineWidth = s.w; c.lineCap = 'round'; c.lineJoin = 'round'; c.beginPath();
+    if (s.t === 'pen') { s.p.forEach((q, i) => i ? c.lineTo(q[0], q[1]) : c.moveTo(q[0], q[1])); }
+    else { const cx = (s.a[0] + s.b[0]) / 2, cy = (s.a[1] + s.b[1]) / 2, rx = Math.abs(s.b[0] - s.a[0]) / 2, ry = Math.abs(s.b[1] - s.a[1]) / 2; c.ellipse(cx, cy, Math.max(rx, 2), Math.max(ry, 2), 0, 0, Math.PI * 2); }
+    c.stroke(); };
+  const draw = () => { cv.width = base.width; cv.height = base.height; ctx.drawImage(base, 0, 0); strokes.forEach(s => drawStroke(ctx, s)); if (cur) drawStroke(ctx, cur); };
+  const bake = () => { const c = base.getContext('2d'); strokes.forEach(s => drawStroke(c, s)); strokes = []; };
+  const pt = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+  cv.onpointerdown = e => { cv.setPointerCapture(e.pointerId); const p = pt(e); cur = tool === 'pen' ? { t: 'pen', w: lw(), p: [p] } : { t: 'ell', w: lw(), a: p, b: p }; };
+  cv.onpointermove = e => { if (!cur) return; const p = pt(e); if (cur.t === 'pen') cur.p.push(p); else cur.b = p; draw(); };
+  cv.onpointerup = () => { if (cur) { strokes.push(cur); cur = null; draw(); } };
+  $('#tEll').onclick = () => { tool = 'ell'; $('#tEll').classList.add('on'); $('#tPen').classList.remove('on'); };
+  $('#tPen').onclick = () => { tool = 'pen'; $('#tPen').classList.add('on'); $('#tEll').classList.remove('on'); };
+  $('#anUndo').onclick = () => { strokes.pop(); draw(); };
+  $('#anRot').onclick = () => { bake(); const n = document.createElement('canvas'); n.width = base.height; n.height = base.width; const c = n.getContext('2d'); c.translate(n.width, 0); c.rotate(Math.PI / 2); c.drawImage(base, 0, 0); base = n; draw(); };
+  const close = () => { L.hidden = true; L.innerHTML = ''; };
+  $('#anCancel').onclick = close;
+  $('#anSave').onclick = async () => {
+    bake(); const blob = await new Promise(r => base.toBlob(r, 'image/jpeg', 0.85));
+    const nid = 'p' + uid(); await dbPut('photos', nid, { blob, w: base.width, h: base.height });
+    collectEditor(); E.photos[idx] = nid; close(); renderEditor();
+  };
+  draw();
+}
+
+/* ---------- export ---------- */
+async function exportDocx() {
+  if (!window.docx) { toast('רכיב הפקת Word לא נטען. בדוק חיבור לאינטרנט ונסה שוב.'); return; }
+  busy(true, 'מפיק את הדוח…');
+  try {
+    const logo = Uint8Array.from(atob(LOGO_B64), c => c.charCodeAt(0));
+    const doc = await buildReport(window.docx, T, async id => { const p = await dbGet('photos', id); if (!p) return null; return { bytes: new Uint8Array(await p.blob.arrayBuffer()), w: p.w, h: p.h }; }, logo);
+    const blob = await window.docx.Packer.toBlob(doc);
+    const name = `דוח סיור ${T.header.site} ${showDate(T.header.date).replace(/\//g, '.')}.docx`.replace(/["\\/:*?<>|]/g, '');
+    busy(false);
+    T.status = 'done'; saveTour();
+    if (IN_CLAUDE) { await saveFile(name, blob); return; }
+    lastFile = new File([blob], name, { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+    const canShare = !!(navigator.canShare && navigator.canShare({ files: [lastFile] }));
+    const L = $('#dialog');
+    L.innerHTML = `<div class="dlg"><p><b>הדוח מוכן</b><br><small class="hint">${esc(name)}</small></p>
+      <div class="row end">${canShare ? '<button class="ghost" id="exShare">שתף (וואטסאפ / מייל)</button>' : ''}<button class="primary" id="exSave">שמור בטלפון</button></div>
+      <div class="row end"><button class="ghost sm" id="exClose">סגור</button></div></div>`;
+    L.hidden = false;
+    const close = () => { L.hidden = true; L.innerHTML = ''; };
+    $('#exClose').onclick = close;
+    $('#exSave').onclick = () => { saveFile(name, lastFile); close(); };
+    if (canShare) $('#exShare').onclick = async () => { try { await navigator.share({ files: [lastFile], title: name }); } catch (e) { } close(); };
+  } catch (e) { busy(false); console.error(e); toast('הפקת הדוח נכשלה: ' + (e?.message || '')); }
+}
+async function saveFile(name, data) {
+  if (downloadsCap) {
+    try { await downloadsCap.save({ filename: name, data }); toast('הקובץ נשמר'); return true; }
+    catch (e) { if (e?.code === 'declined') { toast('השמירה בוטלה'); return false; } if (e?.code === 'rate_limited') { toast('חלון שמירה כבר פתוח'); return false; } }
+  }
+  try { const a = document.createElement('a'); a.href = URL.createObjectURL(data instanceof Blob ? data : new Blob([data])); a.download = name; document.body.appendChild(a); a.click(); a.remove(); return true; }
+  catch (e) { toast('לא ניתן לשמור קבצים בתצוגה הזו'); return false; }
+}
+async function backup() {
+  busy(true, 'מכין גיבוי…');
+  const photos = {};
+  for (const t of S.tours) for (const f of t.findings) for (const id of f.photos) {
+    if (photos[id]) continue; const p = await dbGet('photos', id); if (!p) continue;
+    const b = new Uint8Array(await p.blob.arrayBuffer()); let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
+    photos[id] = { b64: btoa(s), w: p.w, h: p.h };
+  }
+  const data = JSON.stringify({ app: 'eco-tour', v: 1, settings: { ...S.settings, apiKey: undefined }, tours: S.tours, photos });
+  busy(false); await saveFile(`גיבוי סיורים ${showDate(today()).replace(/\//g, '.')}.json`, new Blob([data], { type: 'application/json' }));
+}
+async function restore(file) {
+  try {
+    busy(true, 'משחזר…'); const j = JSON.parse(await file.text()); if (j.app !== 'eco-tour') throw new Error('bad');
+    for (const [id, p] of Object.entries(j.photos || {})) { const bin = Uint8Array.from(atob(p.b64), c => c.charCodeAt(0)); await dbPut('photos', id, { blob: new Blob([bin], { type: 'image/jpeg' }), w: p.w, h: p.h }); }
+    let n = 0; for (const t of j.tours || []) { const i = S.tours.findIndex(x => x.id === t.id); if (i >= 0) S.tours[i] = t; else S.tours.push(t); await dbPut('tours', t.id, t); n++; }
+    if (j.settings && !S.settings.author) { S.settings = { ...S.settings, ...j.settings }; saveSettings(); }
+    busy(false); toast(`שוחזרו ${n} סיורים`); render();
+  } catch (e) { busy(false); toast('הקובץ אינו גיבוי תקין של האפליקציה'); }
+}
+function openSettings() {
+  const L = $('#dialog');
+  L.innerHTML = `<div class="dlg form"><h2>הגדרות</h2>
+    <label>השם שלך (ייכנס כ"נכתב ע"י")<input id="stA" value="${esc(S.settings.author)}"></label>
+    <label>התפקיד שלך<input id="stT" value="${esc(S.settings.authorTitle)}"></label>
+    ${IN_CLAUDE ? '' : `<label>מפתח API של Anthropic (לא חובה – לניסוח ממצאים עם Claude)<input id="stK" type="password" value="${esc(S.settings.apiKey || '')}" dir="ltr" autocomplete="off"></label><small class="hint">המפתח נשמר רק בטלפון הזה. בלי מפתח כל השאר עובד כרגיל.</small><br>`}
+    <small class="hint">${S.settings.people.length} משתתפים ו-${S.settings.owners.length} אחראים שמורים להשלמה אוטומטית.</small>
+    <div class="row end"><button class="ghost" id="stClr">נקה רשימות</button><button class="primary" id="stOk">שמור</button></div></div>`;
+  L.hidden = false;
+  $('#stClr').onclick = () => { S.settings.people = []; S.settings.owners = []; saveSettings(); toast('הרשימות נוקו'); };
+  $('#stOk').onclick = () => { S.settings.author = $('#stA').value.trim(); S.settings.authorTitle = $('#stT').value.trim(); if ($('#stK')) { S.settings.apiKey = $('#stK').value.trim(); setupApiSampler(); } saveSettings(); L.hidden = true; L.innerHTML = ''; };
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click', async e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const d = b.dataset, act = d.act;
+  if (d.open) { T = S.tours.find(t => t.id === d.open); S.view = 'tour'; S.tab = 'findings'; render(); return; }
+  if (d.client) { T.header.client = d.client; document.querySelectorAll('[data-client]').forEach(x => x.classList.toggle('on', x === b)); renderTplBox(); return; }
+  if (d.tpl) { T.templateId = d.tpl; T._manualTpl = true; renderTplBox(); return; }
+  if (d.delpp) { T.participants.splice(+d.delpp, 1); saveTour(); renderSetup(); return; }
+  if (d.tab) { S.tab = d.tab; render(); return; }
+  if (d.edit) { openEditor(T.findings.find(f => f.id === d.edit), false); return; }
+  if (d.addf) { const f = blankFinding(d.addf, { location: T._lastLocation || '', status: TEMPLATES[T.templateId].mode === 'checklist' ? '' : 'bad' }); openEditor(f, true); return; }
+  if (d.rename) { const s = T.sections.find(x => x.id === d.rename); const v = await ask('שם האזור בסיור', { input: s.title }); if (v !== null) { s.title = v.trim(); saveTour(); render(); } return; }
+  if (d.sum) { T.summary[d.sum] = d.v; saveTour(); $('#tabBody').innerHTML = summaryTab(); return; }
+  if (d.fust) { T.followups[+d.fust].status = d.v; saveTour(); $('#tabBody').innerHTML = followupsTab(); return; }
+  if (d.delfu) { if (await ask('להסיר את הפער מהרשימה?', { ok: 'הסר', danger: true })) { T.followups.splice(+d.delfu, 1); saveTour(); render(); } return; }
+  if (d.st !== undefined && S.sheet) { collectEditor(); E.status = d.st; if (d.st === 'ok' && TEMPLATES[T.templateId].due && !E.due) E.due = 'ידיעה'; renderEditor(); return; }
+  if (d.due && S.sheet) { const inp = document.querySelector('[data-e="due"]'); if (d.due[0] === '+') { const dt = new Date(); dt.setDate(dt.getDate() + +d.due.slice(1)); inp.value = dotDate(dt); } else inp.value = d.due; return; }
+  if (d.delph) { collectEditor(); E.photos.splice(+d.delph, 1); renderEditor(); return; }
+  if (d.annot) { collectEditor(); annotate(+d.annot); return; }
+  switch (act) {
+    case 'new': startNew(); break;
+    case 'home': if (S.view === 'setup' && T?._unsaved) T = null; S.view = 'home'; render(); break;
+    case 'settings': openSettings(); break;
+    case 'addpp': T.participants.push({ name: '', role: '' }); renderSetup(); break;
+    case 'docno': T.header.docNo = newDocNo(); renderTplBox(); break;
+    case 'begin': beginTour(); break;
+    case 'details': S.view = 'setup'; render(); break;
+    case 'backTour': saveTour(); S.view = 'tour'; render(); break;
+    case 'deltour': if (await ask('למחוק את הסיור וכל התמונות שלו? לא ניתן לשחזר.', { ok: 'מחק', danger: true })) {
+      for (const f of T.findings) for (const p of f.photos) dbDel('photos', p);
+      dbDel('tours', T.id); S.tours = S.tours.filter(t => t !== T); T = null; S.view = 'home'; render(); } break;
+    case 'addsec': { const v = await ask('שם האזור החדש', { input: '' }); if (v) { T.sections.push({ id: 's' + uid(), title: v.trim() }); saveTour(); render(); } break; }
+    case 'snap': pickPhotos(true, ids => {
+      const tpl = TEMPLATES[T.templateId];
+      const sec = T.sections.find(s => s.id === T._lastSection) || T.sections[T.sections.length - 1];
+      openEditor(blankFinding(sec.id, { photos: ids, location: T._lastLocation || '', status: tpl.mode === 'checklist' ? 'bad' : 'bad' }), true);
+    }); break;
+    case 'edCam': collectEditor(); pickPhotos(true, ids => { E.photos.push(...ids); renderEditor(); }); break;
+    case 'edGal': collectEditor(); pickPhotos(false, ids => { E.photos.push(...ids); renderEditor(); }); break;
+    case 'closeEd': closeEditor(); break;
+    case 'saveEd': collectEditor(); saveEditor(); break;
+    case 'delEd': if (await ask('למחוק את הממצא?', { ok: 'מחק', danger: true })) { T.findings = T.findings.filter(f => f.id !== E.id); saveTour(); closeEditor(); render(); } break;
+    case 'ai': collectEditor(); aiDraft(); break;
+    case 'allok': SUMMARY_TOPICS.forEach(t => { if (!T.summary[t]) T.summary[t] = 'תקין'; }); saveTour(); $('#tabBody').innerHTML = summaryTab(); break;
+    case 'addfu': T.followups.push({ id: 'u' + uid(), text: '', date: '', location: '', owner: '', status: '' }); saveTour(); render(); break;
+    case 'export': exportDocx(); break;
+    case 'backup': backup(); break;
+    case 'restore': $('#restoreIn').value = ''; $('#restoreIn').click(); break;
+  }
+});
+document.addEventListener('input', e => {
+  const el = e.target, d = el.dataset;
+  if (d.t) { setPath(T, d.t, el.value); saveTour(); if (/client|site|location|date/.test(d.t) && T._unsaved) renderTplBox(); }
+  else if (d.pp) { const [i, k] = d.pp.split('.'); T.participants[+i][k] = el.value; saveTour(); }
+  else if (d.fu) { const [i, k] = d.fu.split('.'); T.followups[+i][k] = el.value; saveTour(); }
+});
+document.addEventListener('change', e => { if (e.target.dataset.t === 'header.date' && T?._unsaved && TEMPLATES[T.templateId].org === 'tavel') { T.header.docNo = newDocNo(); renderTplBox(); } });
+
+/* ---------- boot ---------- */
+(async function boot() {
+  $('#camIn').addEventListener('change', onPicked); $('#galIn').addEventListener('change', onPicked);
+  $('#restoreIn').addEventListener('change', e => { if (e.target.files[0]) restore(e.target.files[0]); });
+  await openDB();
+  S.tours = (await dbAll('tours')) || [];
+  S.tours.forEach(t => mem.tours.set(t.id, t));
+  const st = await dbGet('kv', 'settings'); if (st) S.settings = { ...S.settings, ...st };
+  setupApiSampler();
+  try { navigator.storage && navigator.storage.persist && navigator.storage.persist(); } catch (e) { }
+  if (!IN_CLAUDE && 'serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => { });
+  render();
+})();
+
+</script></body></html>

@@ -1,0 +1,12 @@
+{
+  "name": "סיורי איכות סביבה",
+  "short_name": "סיורי סביבה",
+  "lang": "he", "dir": "rtl",
+  "start_url": "./", "scope": "./",
+  "display": "standalone", "orientation": "portrait",
+  "background_color": "#E8ECEA", "theme_color": "#17252A",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
