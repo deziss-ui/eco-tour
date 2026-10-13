@@ -1,6 +1,6 @@
 {
-  "name": "סיורי איכות סביבה",
-  "short_name": "סיורי סביבה",
+  "name": "Enviro Audit",
+  "short_name": "Enviro Audit",
   "lang": "he", "dir": "rtl",
   "start_url": "./", "scope": "./",
   "display": "standalone", "orientation": "portrait",

@@ -2,7 +2,8 @@
 <html lang="he" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#17252A">
-<title>סיורי איכות סביבה</title>
+<meta name="application-name" content="Enviro Audit"><meta name="apple-mobile-web-app-title" content="Enviro Audit">
+<title>Enviro Audit</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
@@ -531,7 +532,7 @@ function render() {
 function renderHome() {
   const tours = [...S.tours].sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
   $('#app').innerHTML = `
-  <header class="top"><h1>סיורי איכות סביבה</h1><button class="ghost sm" data-act="settings">הגדרות</button></header>
+  <header class="top"><h1>Enviro Audit</h1><button class="ghost sm" data-act="settings">הגדרות</button></header>
   <main class="wrap">
     <button class="start" data-act="new"><span class="plus">+</span><span><b>סיור חדש</b><small>פרטי הסיור, צילום ממצאים והפקת דוח</small></span></button>
     ${tours.length ? `<h2 class="lbl">סיורים במכשיר</h2>` : `<p class="empty">עוד אין סיורים. כל סיור שתתחיל יישמר כאן במכשיר, כולל התמונות.</p>`}
