@@ -392,7 +392,7 @@ const mem = { tours: new Map(), photos: new Map(), kv: new Map() };
 function openDB() {
   return new Promise(res => {
     try {
-      const r = indexedDB.open('eco-tour', 1);
+      const r = indexedDB.open('enviro-audit', 1);
       r.onupgradeneeded = () => { const d = r.result; ['tours', 'photos', 'kv'].forEach(n => { if (!d.objectStoreNames.contains(n)) d.createObjectStore(n); }); };
       r.onsuccess = () => { idb = r.result; res(); };
       r.onerror = () => { storageOK = false; res(); };
@@ -856,12 +856,12 @@ async function backup() {
     const b = new Uint8Array(await p.blob.arrayBuffer()); let s = ''; for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000));
     photos[id] = { b64: btoa(s), w: p.w, h: p.h };
   }
-  const data = JSON.stringify({ app: 'eco-tour', v: 1, settings: { ...S.settings, apiKey: undefined }, tours: S.tours, photos });
+  const data = JSON.stringify({ app: 'enviro-audit', v: 1, settings: { ...S.settings, apiKey: undefined }, tours: S.tours, photos });
   busy(false); await saveFile(`גיבוי סיורים ${showDate(today()).replace(/\//g, '.')}.json`, new Blob([data], { type: 'application/json' }));
 }
 async function restore(file) {
   try {
-    busy(true, 'משחזר…'); const j = JSON.parse(await file.text()); if (j.app !== 'eco-tour') throw new Error('bad');
+    busy(true, 'משחזר…'); const j = JSON.parse(await file.text()); if (j.app !== 'enviro-audit') throw new Error('bad');
     for (const [id, p] of Object.entries(j.photos || {})) { const bin = Uint8Array.from(atob(p.b64), c => c.charCodeAt(0)); await dbPut('photos', id, { blob: new Blob([bin], { type: 'image/jpeg' }), w: p.w, h: p.h }); }
     let n = 0; for (const t of j.tours || []) { const i = S.tours.findIndex(x => x.id === t.id); if (i >= 0) S.tours[i] = t; else S.tours.push(t); await dbPut('tours', t.id, t); n++; }
     if (j.settings && !S.settings.author) { S.settings = { ...S.settings, ...j.settings }; saveSettings(); }
